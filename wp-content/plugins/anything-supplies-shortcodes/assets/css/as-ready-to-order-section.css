@@ -1,0 +1,54 @@
+.rto-card {
+   background: #f7ecd0;
+   border-radius: 8px;
+   padding: 28px;
+   width: 100%;
+   display: flex;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+   border: 1px solid #d7d7d7;
+}
+
+.rto-card-heading {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   width: 100%;
+   max-width: 300px;
+}
+
+.rto-sub-heading {
+   margin: 0;
+   font-weight: 600;
+}
+
+.rto-button {
+   padding: 10px 20px;
+   width: fit-content;
+   border-radius: 24px;
+   font-size: 1.5rem;
+   font-weight: 600;
+   background-color: #1e73be;
+   color: #fff;
+   border: none;
+}
+
+.rto-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+   width: 100%;
+   gap: 10px;
+   padding-top: 6px;
+   margin-bottom: 24px;
+   overflow: auto;
+}
+
+.rto-item-label {
+   font-size: 14px;
+   color: #333;
+   font-weight: 500;
+   padding-left: 0.5rem;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   /* max-width: 190px; */
+   font-size: 12px;
+}

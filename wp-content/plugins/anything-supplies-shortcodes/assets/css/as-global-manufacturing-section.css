@@ -1,0 +1,82 @@
+.gmf-container {
+   margin: 0 auto;
+}
+
+.gmf-header {
+   text-align: center;
+   margin-bottom: 30px;
+}
+
+.gmf-header h2 {
+   color: #000;
+   font-size: 2.2em;
+   margin-bottom: 12px;
+   font-weight: 700;
+}
+
+.gmf-header p {
+   color: #64748b;
+   font-size: 1.05em;
+   max-width: 600px;
+   margin: 0 auto;
+}
+
+.gmf-grid {
+   display: grid;
+   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+   gap: 24px;
+}
+
+.gmf-card {
+   background: white;
+   border-radius: 10px;
+   border: 1px solid #d7d7d7;
+   padding: 40px 20px;
+   text-align: center;
+   transition: all 0.3s ease;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.gmf-card:hover {
+   transform: translateY(-4px);
+   box-shadow: 0 8px 20px rgba(8, 145, 178, 0.12);
+}
+
+.gmf-flag {
+   font-size: 60px;
+   margin-bottom: 16px;
+   transition: transform 0.3s ease;
+}
+
+.gmf-card:hover .gmf-flag {
+   transform: scale(1.15);
+}
+
+.gmf-country {
+   font-size: 1.1em;
+   font-weight: 600;
+   color: #1e293b;
+}
+
+@media (max-width: 768px) {
+   .gmf-header h2 {
+      font-size: 1.6em;
+   }
+
+   .gmf-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+   }
+
+   .gmf-card {
+      padding: 30px 15px;
+   }
+
+   .gmf-flag {
+      font-size: 50px;
+   }
+
+   .gmf-country {
+      font-size: 0.9em;
+   }
+}

@@ -1,0 +1,76 @@
+.low_moq-container {
+   display: flex;
+   justify-content: space-between;
+   gap: 20px;
+}
+
+.low_moq-card {
+   background: url(/wp-content/themes/martfury-child/images/bg/anything-supplies-bg.webp);
+   background-size: cover;
+   background-position: center;
+   border-radius: 10px;
+   padding: 18px;
+   max-width: 50%;
+   width: 100%;
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.low_moq-card h2 {
+   font-size: 24px;
+   font-weight: 700;
+   color: #1a1a1a;
+   margin-bottom: 12px;
+   margin-top: 0px;
+}
+.low_moq-card h2,
+.low_moq-card p {
+   text-align: center;
+}
+
+.low_moq-grid {
+   display: grid;
+   gap: 16px;
+   padding-top: 6px;
+   margin-bottom: 20px;
+   grid-auto-flow: column;
+   overflow-x: auto;
+   grid-auto-columns: minmax(160px, 1fr);
+   overflow: auto;
+}
+
+.low_moq-grid .item-image img {
+   width: 100%;
+}
+
+.low_moq-item-label {
+   font-size: 14px;
+   color: #333;
+   font-weight: 400;
+   padding-left: 0.5rem;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   /* max-width: 144px; */
+   font-size: 12px;
+}
+
+@media (max-width: 770px) {
+   .low_moq-container {
+      flex-direction: column;
+   }
+
+   .low_moq-card {
+      max-width: 100%;
+      margin-bottom: 20px;
+   }
+
+   .low_moq-grid {
+      display: grid;
+      gap: 16px;
+      padding-top: 6px;
+      margin-bottom: 20px;
+      grid-auto-flow: column;
+      /* grid-template-rows: repeat(2, 1fr); */
+      /* grid-template-columns: repeat(3, 1fr); */
+      overflow: auto;
+   }
+}

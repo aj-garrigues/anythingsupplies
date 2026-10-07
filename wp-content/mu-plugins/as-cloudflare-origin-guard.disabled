@@ -1,0 +1,140 @@
+<?php
+/**
+ * Plugin Name: AS Cloudflare Origin Guard
+  * Description: Blocks direct-to-origin WordPress requests unless Cloudflare adds the private origin verification header.
+   * Version: 1.0.0
+    */
+
+    if (!defined('ABSPATH')) {
+        exit;
+        }
+
+        const AS_ORIGIN_GUARD_HEADER = 'HTTP_X_AS_ORIGIN_VERIFY';
+        const AS_ORIGIN_GUARD_SECRET = 'ac1534a9f39053d6262c79fe551c72e9c5653c3d2f5299d34c56bb26ffa0f2b8';
+
+        if (PHP_SAPI === 'cli' || (defined('WP_CLI') && WP_CLI)) {
+            return;
+            }
+
+            $remote_addr = $_SERVER['REMOTE_ADDR'] ?? '';
+            if ($remote_addr === '127.0.0.1' || $remote_addr === '::1') {
+                return;
+                }
+
+                $provided_secret = $_SERVER[AS_ORIGIN_GUARD_HEADER] ?? '';
+                if (hash_equals(AS_ORIGIN_GUARD_SECRET, $provided_secret)) {
+                    return;
+                    }
+
+                    status_header(403);
+                    nocache_headers();
+                    header('Content-Type: text/plain; charset=utf-8');
+                    header('X-Origin-Guard: blocked');
+                    echo 'Forbidden';
+                    exit;
+<?php
+/**
+ * Plugin Name: AS Cloudflare Origin Guard
+ * Description: Blocks direct-to-origin WordPress requests unless Cloudflare adds the private origin verification header.
+ * Version: 1.0.0
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+const AS_ORIGIN_GUARD_HEADER = 'HTTP_X_AS_ORIGIN_VERIFY';
+const AS_ORIGIN_GUARD_SECRET = 'ac1534a9f39053d6262c79fe551c72e9c5653c3d2f5299d34c56bb26ffa0f2b8';
+
+function as_origin_guard_requires_header(): bool
+{
+    $request_uri = $_SERVER['REQUEST_URI'] ?? '';
+    $path = strtolower((string) parse_url($request_uri, PHP_URL_PATH));
+    $query = strtolower($_SERVER['QUERY_STRING'] ?? '');
+
+    if (strpos($query, 'add-to-wishlist=') !== false) {
+        return true;
+    }
+
+    if (strpos($query, 'wc-ajax=get_wishlist_fragments') !== false) {
+        return true;
+    }
+
+    if (strpos($query, 'wc-ajax=get_refreshed_fragments') !== false) {
+        return true;
+    }
+
+    $protected_paths = [
+        '/wp-admin/admin-ajax.php',
+        '/wp-login.php',
+        '/xmlrpc.php',
+    ];
+
+    return in_array($path, $protected_paths, true);
+}
+
+if (PHP_SAPI === 'cli' || (defined('WP_CLI') && WP_CLI)) {
+    return;
+}
+
+if (!as_origin_guard_requires_header()) {
+    return;
+}
+
+$remote_addr = $_SERVER['REMOTE_ADDR'] ?? '';
+if ($remote_addr === '127.0.0.1' || $remote_addr === '::1') {
+    return;
+}
+
+$provided_secret = $_SERVER[AS_ORIGIN_GUARD_HEADER] ?? '';
+if (hash_equals(AS_ORIGIN_GUARD_SECRET, $provided_secret)) {
+    return;
+}
+
+status_header(403);
+nocache_headers();
+header('Content-Type: text/plain; charset=utf-8');
+header('X-Origin-Guard: blocked');
+echo 'Forbidden';
+exit;
+<?php
+/**
+ * Plugin Name: AS Cloudflare Origin Guard
+ * Description: Blocks direct-to-origin WordPress requests unless Cloudflare adds the private origin verification header.
+ * Version: 1.0.0
+ */
+
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+const AS_ORIGIN_GUARD_HEADER = 'HTTP_X_AS_ORIGIN_VERIFY';
+const AS_ORIGIN_GUARD_SECRET = 'ac1534a9f39053d6262c79fe551c72e9c5653c3d2f5299d34c56bb26ffa0f2b8';
+
+if (PHP_SAPI === 'cli' || (defined('WP_CLI') && WP_CLI)) {
+    return;
+}
+
+$remote_addr = $_SERVER['REMOTE_ADDR'] ?? '';
+if ($remote_addr === '127.0.0.1' || $remote_addr === '::1') {
+    return;
+}
+
+$provided_secret = $_SERVER[AS_ORIGIN_GUARD_HEADER] ?? '';
+if (hash_equals(AS_ORIGIN_GUARD_SECRET, $provided_secret)) {
+    return;
+}
+
+status_header(403);
+nocache_headers();
+header('Content-Type: text/plain; charset=utf-8');
+header('X-Origin-Guard: blocked');
+echo 'Forbidden';
+exit;
+<?php
+/**
+ * Plugin Name: AS Cloudflare Origin Guard
+ * Description: Temporarily disabled recovery stub.
+ * Version: 1.0.0
+ */
+return;

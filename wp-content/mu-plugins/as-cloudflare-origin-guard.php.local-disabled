@@ -1,0 +1,89 @@
+<?php
+/**
+ * Plugin Name: AS Cloudflare Origin Guard
+ * Description: Requires the Cloudflare origin verification header for all WordPress web requests.
+ * Version: 1.1.2
+ */
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+$as_origin_expected = 'ac1534a9f39053d6262c79fe551c72e9c5653c3d2f5299d34c56bb26ffa0f2b8';
+
+if (PHP_SAPI !== 'cli' && !(defined('WP_CLI') && WP_CLI)) {
+    $as_origin_provided = isset($_SERVER['HTTP_X_AS_ORIGIN_VERIFY']) ? $_SERVER['HTTP_X_AS_ORIGIN_VERIFY'] : '';
+
+    if (!is_string($as_origin_provided) || !hash_equals($as_origin_expected, $as_origin_provided)) {
+        status_header(403);
+        nocache_headers();
+        header('Cache-Control: no-store, private, max-age=0');
+        header('Content-Type: text/plain; charset=utf-8');
+        header('X-Origin-Guard: blocked');
+        echo 'Forbidden';
+        exit;
+    }
+}
+
+function as_origin_guard_is_own_url($url) {
+    $parts = wp_parse_url($url);
+    if (!is_array($parts) || empty($parts['host'])) {
+        return false;
+    }
+
+    return in_array(strtolower($parts['host']), array('anythingsupplies.com', 'www.anythingsupplies.com'), true);
+}
+
+add_filter('http_request_args', function ($args, $url) use ($as_origin_expected) {
+    if (!as_origin_guard_is_own_url($url)) {
+        return $args;
+    }
+
+    if (empty($args['headers']) || !is_array($args['headers'])) {
+        $args['headers'] = array();
+    }
+
+    $args['headers']['X-AS-Origin-Verify'] = $as_origin_expected;
+    return $args;
+}, 10, 2);
+
+add_action('http_api_curl', function ($handle, $parsed_args, $url) {
+    if (!as_origin_guard_is_own_url($url)) {
+        return;
+    }
+
+    $parts = wp_parse_url($url);
+    $host = strtolower($parts['host']);
+    $scheme = isset($parts['scheme']) ? strtolower($parts['scheme']) : 'https';
+    $port = isset($parts['port']) ? (int) $parts['port'] : ('http' === $scheme ? 80 : 443);
+    if (!in_array($port, array(80, 443), true)) {
+        return;
+    }
+
+    static $as_cloudflare_ip_cache = array();
+    if (!isset($as_cloudflare_ip_cache[$host])) {
+        $ips = array();
+        if (function_exists('dns_get_record')) {
+            $records = @dns_get_record($host, DNS_A);
+            if (is_array($records)) {
+                foreach ($records as $record) {
+                    if (!empty($record['ip']) && false !== filter_var($record['ip'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE) && '35.213.206.90' !== $record['ip']) {
+                        $ips[] = $record['ip'];
+                    }
+                }
+            }
+        }
+
+        $as_cloudflare_ip_cache[$host] = array_values(array_unique($ips));
+    }
+
+    if (empty($as_cloudflare_ip_cache[$host])) {
+        return;
+    }
+
+    $resolve = array();
+    foreach ($as_cloudflare_ip_cache[$host] as $ip) {
+        $resolve[] = $host . ':' . $port . ':' . $ip;
+    }
+
+    curl_setopt($handle, CURLOPT_RESOLVE, $resolve);
+}, 10, 3);

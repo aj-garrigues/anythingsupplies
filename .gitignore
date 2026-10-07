@@ -1,0 +1,10 @@
+# Track only custom code; everything else is core, data, or secrets.
+/*
+!/.gitignore
+!/wp-content/
+/wp-content/*
+!/wp-content/themes/
+!/wp-content/plugins/
+!/wp-content/mu-plugins/
+.DS_Store
+*.log

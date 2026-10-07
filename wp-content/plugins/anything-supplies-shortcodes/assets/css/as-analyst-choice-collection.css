@@ -1,0 +1,197 @@
+.main-wrapper {
+   display: flex;
+   flex-wrap: wrap;
+   gap: 12px;
+}
+
+.analyst-container .analyst-card:nth-child(1) {
+   background-image: url(/wp-content/themes/martfury-child/images/bg/product-bundel-Analyst.webp);
+   background-size: cover;
+}
+
+.analyst-container .analyst-card .grid a {
+   background: #ffffff;
+   border-radius: 8px;
+}
+
+.analyst-container .analyst-card .item-image {
+   width: 100%;
+   aspect-ratio: 1;
+   overflow: hidden;
+   display: flex;
+   margin-bottom: 8px;
+   border-top-left-radius: 8px;
+   border-top-right-radius: 8px;
+   align-items: center;
+   justify-content: center;
+}
+
+.analyst-container .analyst-card .item-image img {
+   width: 100%;
+   height: 100%;
+   object-fit: cover;
+   object-position: center; /* Keeps the center of the product visible */
+}
+
+.analyst-card {
+   background: white;
+   border-radius: 8px;
+   border: 1px solid #e7e7e7;
+   padding: 13px;
+   flex: 1 1 30%;
+   width: calc(33.33% - 10px);
+   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+   /* Ensure cards stack vertically by default */
+   width: 100%;
+   margin-bottom: 15px;
+   box-sizing: border-box;
+}
+
+.analyst-card h2 {
+   font-size: 20px;
+   font-weight: 700;
+   color: #1a1a1a;
+   margin-bottom: 12px;
+   margin-top: 0px;
+}
+
+.grid {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 16px;
+   margin-bottom: 24px;
+}
+
+.grid .item {
+   text-decoration: none;
+   color: inherit;
+   transition: transform 0.2s ease;
+}
+
+.grid .item:hover {
+   transform: translateY(-4px);
+}
+
+.grid .item-label {
+   font-size: 14px;
+   color: #333;
+   font-weight: 400;
+   padding-left: 0.5rem;
+   text-wrap: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   width: 100%;
+   margin: 5px 10px;
+}
+
+.see-all {
+   color: #000;
+   text-decoration: none;
+   font-size: 14px;
+   font-weight: 500;
+   display: inline-block;
+   transition: color 0.2s ease;
+}
+
+.see-all:hover {
+   color: #004080;
+   text-decoration: underline;
+}
+
+/* The Grid Wrapper */
+.product-grid-two {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr); /* Exactly 2 columns */
+   gap: 15px; /* Space between items */
+   margin: 0px 0;
+}
+
+.grid-item {
+   background-color: #ffffff; /* White background */
+   border-radius: 8px; /* Rounded corners */
+   padding: 0px 0px 15px 0px; /* Space inside the box */
+   text-decoration: none; /* Removes link underline */
+   color: #333; /* Text color */
+
+   /* Optional: Adds a subtle border so white boxes stand out */
+   border: 1px solid #f0f0f0;
+   padding: 1px;
+   /* Optional: Adds a soft professional shadow */
+   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+   /* Layout properties */
+   display: flex;
+   flex-direction: column;
+   transition: transform 0.2s ease; /* Smooth hover effect */
+}
+
+/* Add a hover effect for better UX */
+.grid-item:hover {
+   transform: translateY(-3px);
+   border: 1px solid #ff4c00;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Image Container (Making it fit) */
+.item-image {
+   width: 100%;
+   aspect-ratio: 1/1; /* Keeps it square */
+   overflow: hidden;
+   background: #f9f9f9;
+   border-top-left-radius: 8px;
+   border-top-right-radius: 8px;
+}
+.item-image img {
+   border-top-left-radius: 8px;
+   border-top-right-radius: 8px;
+}
+
+/* The Image itself */
+.fit-image {
+   width: 100%;
+   height: 100%;
+   object-fit: cover; /* Fills the square without stretching */
+}
+
+/* Label styling */
+.item-label {
+   margin: 5px;
+   margin-top: 8px;
+   font-size: 14px;
+   line-height: 1.2;
+   font-weight: 400;
+   color: #111111;
+}
+
+@media (max-width: 770px) {
+   .card {
+      padding: 16px;
+      max-width: 100%;
+   }
+   .grid {
+      gap: 12px;
+   }
+   .grid a {
+      max-width: 178px;
+   }
+
+   .main-wrapper {
+      gap: 8px;
+   }
+
+   .item-label {
+      font-size: 12px;
+   }
+
+   .product-grid-two {
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+   }
+
+   .analyst-card {
+      padding: 10px;
+   }
+
+   .analyst-container .analyst-card:nth-child(3) {
+      display: none !important;
+   }
+}

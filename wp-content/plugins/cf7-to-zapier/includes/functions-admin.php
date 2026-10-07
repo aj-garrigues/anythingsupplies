@@ -1,0 +1,87 @@
+<?php
+
+/**
+ * A helper to admin UI
+ *
+ * @package         Cf7_To_Zapier
+ * @since           4.0.0
+ */
+
+defined( 'ABSPATH' ) || die( 'No script kiddies please!' );
+
+/**
+ * Create a text input
+ */
+if ( ! function_exists( 'ctz_text_input' ) ) {
+    function ctz_text_input( $key, $value ) {
+        if ( is_array( $value ) ) {
+            $value = implode( ',', $value );
+        }
+
+        echo '<input class="large-text" type="text" id="ctz-webhook-' . esc_attr( $key ) . '" name="ctz-webhook-' . esc_attr( $key ) . '" value="' . esc_attr( $value ) . '">';
+    }
+}
+
+/**
+ * Create a checkbox input
+ */
+if ( ! function_exists( 'ctz_checkbox_input' ) ) {
+    function ctz_checkbox_input( $key, $value ) {
+        echo '<input type="checkbox" id="ctz-webhook-' . esc_attr( $key ) . '" name="ctz-webhook-' . esc_attr( $key ) . '" value="1" ' . checked( $value, '1', false ) . '>';
+    }
+}
+
+/**
+ * Create a textarea input
+ */
+if ( ! function_exists( 'ctz_textarea_input' ) ) {
+    function ctz_textarea_input( $key, $value ) {
+        if ( is_array( $value ) ) {
+            $value = implode( PHP_EOL, $value );
+        }
+
+        $value = esc_textarea( $value );
+        $rows = ( (int) substr_count( $value, "\n" ) ) + 2;
+        $rows = max( $rows, 4 );
+
+        echo '<textarea id="ctz-webhook-' . esc_attr( $key ) . '" name="ctz-webhook-' . esc_attr( $key ) . '" rows="' . $rows . '" class="large-text code">' . $value . '</textarea>';
+    }
+}
+
+/**
+ * Create a select input
+ */
+if ( ! function_exists( 'ctz_select_input' ) ) {
+    function ctz_select_input( $key, $value, $options ) {
+        echo '<select id="ctz-webhook-' . esc_attr( $key ) . '" name="ctz-webhook-' . esc_attr( $key ) . '" class="select2">';
+
+        foreach ( $options as $opt_key => $label ) {
+            if ( is_numeric( $opt_key ) ) {
+                $opt_key = $label;
+            }
+
+            echo '<option value="' . esc_attr( $opt_key ) . '" ' . selected( $opt_key, $value, false ) . '>' . esc_html( $label ) . '</option>';
+        }
+
+        echo '</select>';
+    }
+}
+
+/**
+ * Get placeholders from string
+ */
+if ( ! function_exists( 'ctz_get_string_placeholders' ) ) {
+    function ctz_get_string_placeholders( $string ) {
+        $matches = [];
+        $placeholders = [];
+
+        preg_match_all( '/\[{1}[^\[\]]+\]{1}/', $string, $matches );
+
+        foreach ( $matches[0] as $placeholder ) {
+            $placeholder = substr( $placeholder, 1, -1 );
+            $placeholders[ $placeholder ] = '[' . $placeholder . ']';
+        }
+
+        return $placeholders;
+    }
+}

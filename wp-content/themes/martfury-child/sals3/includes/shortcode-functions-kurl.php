@@ -30,8 +30,14 @@ add_shortcode( 'hero_categories', function ( $atts ) {
     echo '<ul class="hero-product-categories">';
 
     foreach ( $terms as $term ) {
+        $thumbnail_id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
+
         echo '<li class="category-item">';
         echo '<a href="' . esc_url( get_term_link( $term ) ) . '">';
+        // Category Image from Products → Categories; empty alt because the name follows.
+        if ( $thumbnail_id ) {
+            echo wp_get_attachment_image( $thumbnail_id, 'thumbnail', false, [ 'class' => 'hero-category-icon', 'alt' => '' ] );
+        }
         echo esc_html( $term->name );
         echo '</a>';
         echo '</li>';

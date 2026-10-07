@@ -137,7 +137,7 @@ add_action('wp_enqueue_scripts', 'my_account_phone_validation_scripts');
 //
 function load_custom_styles() {
     $custom_styles = [
-        'kurl-style' => [ 'path' => '/sals3/assets/css/kurl.css', 'ver' => '1.0.9'],
+        'kurl-style' => [ 'path' => '/sals3/assets/css/kurl.css', 'ver' => '1.0.12'],
     ];
 
     foreach($custom_styles as $handle => $style) {

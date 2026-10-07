@@ -108,6 +108,18 @@ li.category-item {
    border-bottom: solid 1px #f3f4f6;
    padding: 4px 20px;
 }
+.hero-product-categories li.category-item a {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+}
+.hero-product-categories .hero-category-icon {
+   flex: 0 0 24px;
+   width: 24px;
+   height: 24px;
+   object-fit: cover;
+   border-radius: 6px;
+}
 
 /* hot products */
 .hot-products-list {
